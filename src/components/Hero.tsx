@@ -4,7 +4,7 @@ import { ChevronDown, MessageCircle, ChevronLeft, ChevronRight } from 'lucide-re
 const Hero = () => {
   const carouselItems = [
     {
-      image: 'https://i.pinimg.com/736x/14/73/aa/1473aaef204afb410e9db515ab3c6a81.jpgs',
+      image: 'https://i.pinimg.com/736x/14/73/aa/1473aaef204afb410e9db515ab3c6a81.jpg',
       title: 'Luxury Weddings',
       description: 'Elegant and sophisticated wedding planning'
     },
@@ -17,7 +17,7 @@ const Hero = () => {
       image: 'https://i.pinimg.com/736x/c5/11/ec/c511ec7473f76ab0ce340cf7e2a1eafa.jpg',
       title: 'Birthday Celebrations',
       description: 'Memorable birthday parties tailored to you'
-    },s
+    },
     {
       image: 'https://images.pexels.com/photos/2263436/pexels-photo-2263436.jpeg',
       title: 'Social Gatherings',
@@ -47,14 +47,11 @@ const Hero = () => {
     return () => clearInterval(interval);
   }, [isAutoPlaying, carouselItems.length]);
 
-  // Smooth scroll to current item
+  // Smooth transition effect
   useEffect(() => {
     if (carouselRef.current) {
-      const itemWidth = carouselRef.current.children[0]?.offsetWidth || 0;
-      carouselRef.current.scrollTo({
-        left: currentIndex * itemWidth,
-        behavior: 'smooth'
-      });
+      carouselRef.current.style.transition = 'transform 0.5s ease-in-out';
+      carouselRef.current.style.transform = `translateX(-${currentIndex * 100}%)`;
     }
   }, [currentIndex]);
 
@@ -104,19 +101,21 @@ const Hero = () => {
           </p>
         </div>
 
-        {/* Side-by-side Carousel */}
-        <div className="relative w-full max-w-6xl mx-auto">
+        {/* Side-by-side Carousel Container */}
+        <div className="relative w-full max-w-6xl mx-auto overflow-hidden">
+          {/* Carousel Track */}
           <div 
             ref={carouselRef}
-            className="flex overflow-x-hidden scroll-smooth snap-x snap-mandatory w-full"
-            style={{ scrollBehavior: 'smooth' }}
+            className="flex w-full transition-transform duration-500 ease-in-out"
+            style={{ width: `${carouselItems.length * 100}%` }}
           >
             {carouselItems.map((item, index) => (
               <div 
                 key={index}
-                className="flex-shrink-0 w-full snap-start"
+                className="w-full flex-shrink-0"
+                style={{ width: `${100 / carouselItems.length}%` }}
               >
-                <div className="flex flex-col md:flex-row items-center bg-white/5 backdrop-blur-sm rounded-xl overflow-hidden border border-white/10">
+                <div className="flex flex-col md:flex-row items-center bg-white/5 backdrop-blur-sm rounded-xl overflow-hidden border border-white/10 mx-2">
                   <div className="w-full md:w-1/2 h-64 md:h-96 relative">
                     <div 
                       className="absolute inset-0 bg-cover bg-center transition-opacity duration-1000"
@@ -143,14 +142,14 @@ const Hero = () => {
           {/* Carousel Navigation Arrows */}
           <button 
             onClick={goToPrev}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 sm:-translate-x-8 bg-white/20 hover:bg-white/30 text-white p-2 rounded-full z-10 transition-all duration-300 hover:scale-110"
+            className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-2 rounded-full z-10 transition-all duration-300 hover:scale-110"
             aria-label="Previous slide"
           >
             <ChevronLeft className="w-6 h-6" />
           </button>
           <button 
             onClick={goToNext}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 sm:translate-x-8 bg-white/20 hover:bg-white/30 text-white p-2 rounded-full z-10 transition-all duration-300 hover:scale-110"
+            className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-2 rounded-full z-10 transition-all duration-300 hover:scale-110"
             aria-label="Next slide"
           >
             <ChevronRight className="w-6 h-6" />
