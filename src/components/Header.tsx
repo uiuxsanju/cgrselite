@@ -33,7 +33,7 @@ const Header = () => {
   <img 
     src="https://i.ibb.co/sJMKxv46/logo-cers.png" 
     alt="CGRS Elite Events Logo" 
-    className="w-12 h-15 sm:w-13 sm:h-19 object-contain transition-all duration-300"
+    className="w-12 h-15 sm:w-13 sm:h-19 object-contain rounded-md transition-all duration-300"
   />
 
   {/* Brand name */}

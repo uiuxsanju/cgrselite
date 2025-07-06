@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronDown, MessageCircle } from 'lucide-react';
+import { ChevronDown, MessageCircle, ChevronLeft, ChevronRight } from 'lucide-react'; // Added arrows
 
 const Hero = () => {
   const images = [
@@ -96,6 +96,31 @@ const Hero = () => {
       <div className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
         <ChevronDown className="w-6 h-6 sm:w-8 sm:h-8 text-white/70" />
       </div>
+      {/* Left & Right Arrows */}
+<button
+  onClick={() =>
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === 0 ? images.length - 1 : prevIndex - 1
+    )
+  }
+  className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/40 hover:bg-black/60 text-white p-2 transition rounded-md"
+  aria-label="Previous Slide"
+>
+  <ChevronLeft className="w-6 h-6" />
+</button>
+
+<button
+  onClick={() =>
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === images.length - 1 ? 0 : prevIndex + 1
+    )
+  }
+  className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/40 hover:bg-black/60 text-white p-2 transition rounded-md"
+  aria-label="Next Slide"
+>
+  <ChevronRight className="w-6 h-6" />
+</button>
+
     </section>
   );
 };
