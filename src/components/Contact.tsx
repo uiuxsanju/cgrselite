@@ -3,7 +3,6 @@ import { Mail, Phone, MapPin, Send, Instagram, Facebook, Linkedin } from 'lucide
 
 const Contact = () => {
   const [formData, setFormData] = useState({
-    fullName: '',
     email: '',
     phone: '',
     eventDate: '',
