@@ -25,9 +25,9 @@ const Contact = () => {
   };
 
   const socialLinks = [
-    { name: 'Instagram', icon: Instagram, href: 'https://www.facebook.com/people/CGRS-ELITE-Events/100067056378022/' },
-    { name: 'Facebook', icon: Facebook, href: '#' },
-    { name: 'LinkedIn', icon: Linkedin, href: '#' }
+    { name: 'Instagram', icon: Instagram, href: 'https://www.instagram.com/cgrselite/?next=%2F&hl=en' },
+    { name: 'Facebook', icon: Facebook, href: 'https://www.facebook.com/people/CGRS-ELITE-Events/100067056378022/' },
+  
   ];
 
   return (
