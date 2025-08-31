@@ -4,7 +4,7 @@ import { Quote, Star } from 'lucide-react';
 const Testimonials = () => {
   const testimonials = [
     {
-      quote: "CGRS, along with KMK Events, flawlessly managed the entire Telangana Pushkaralu arrangements. Their coordination with government officials and exceptional attention to pilgrim needs were truly commendable.",
+      quote: "CGRS, along with KMK Events, flawlessly managed the entire Telangana Govt Pushkaralu arrangements. Their coordination with government officials and exceptional attention to pilgrim needs were truly commendable.",
       event: "Sarasvati Pushkaram",
       rating: 5
     },
