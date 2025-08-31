@@ -5,71 +5,44 @@ const Process = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
 
-  useEffect(() => {
-    // Animation trigger when component mounts
-    setIsVisible(true);
-    
-    // Auto-rotate steps for demonstration
-    const interval = setInterval(() => {
-      setActiveStep(prev => (prev + 1) % steps.length);
-    }, 4000);
-    
-    return () => clearInterval(interval);
-  }, []);
-
-  const handleWhatsAppClick = () => {
-    // Replace with your actual WhatsApp number (without + sign)
-    const phoneNumber = '6303366066';
-    // Pre-filled message
-    const message = "Hello! I'm interested in your event planning services and would like to learn more.";
-    // Open WhatsApp
-    window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
-  };
-
   const steps = [
     {
       number: '1',
       icon: MessageCircle,
       title: 'Consultation & Vision',
       description: 'We start by understanding your story, style, and aspirations to create a shared vision for your event.',
-      details: [
-        'In-depth discovery session',
-        'Budget planning & timeline',
-        'Theme conceptualization',
-        'Venue selection guidance'
-      ],
-      color: 'bg-blue-500',
-      gradient: 'from-blue-500 to-blue-600'
+      details: ['In-depth discovery session', 'Budget planning & timeline', 'Theme conceptualization', 'Venue selection guidance'],
+      color: 'bg-blue-500'
     },
     {
       number: '2',
       icon: Palette,
       title: 'Design & Planning',
       description: 'Our team crafts a detailed plan, from vendor selection to design mockups, ensuring every element is perfect.',
-      details: [
-        'Custom design development',
-        'Vendor coordination',
-        'Detailed timeline creation',
-        'Design mockups & revisions'
-      ],
-      color: 'bg-purple-500',
-      gradient: 'from-purple-500 to-purple-600'
+      details: ['Custom design development', 'Vendor coordination', 'Detailed timeline creation', 'Design mockups & revisions'],
+      color: 'bg-purple-500'
     },
     {
       number: '3',
       icon: CheckCircle,
       title: 'Flawless Execution',
       description: 'On the day of the event, we manage everything seamlessly so you can relax and enjoy the moment.',
-      details: [
-        'Day-of coordination',
-        'Vendor management',
-        'Timeline execution',
-        'Problem resolution'
-      ],
-      color: 'bg-amber-500',
-      gradient: 'from-amber-500 to-amber-600'
+      details: ['Day-of coordination', 'Vendor management', 'Timeline execution', 'Problem resolution'],
+      color: 'bg-amber-500'
     }
   ];
+
+  useEffect(() => {
+    setIsVisible(true);
+    const interval = setInterval(() => setActiveStep(prev => (prev + 1) % steps.length), 4000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleWhatsAppClick = () => {
+    const phoneNumber = '916303366066'; // +91 6303366066
+    const message = "Hello! I'm interested in your event planning services and would like to learn more.";
+    window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
+  };
 
   return (
     <section className="py-16 sm:py-20 lg:py-24 bg-gradient-to-br from-slate-50 to-blue-50/30">
@@ -83,25 +56,22 @@ const Process = () => {
           </p>
         </div>
 
-        {/* Desktop Process Visualization */}
+        {/* Desktop */}
         <div className="hidden lg:block relative mb-16">
-          {/* Progress Line */}
           <div className="absolute left-10 right-10 top-10 h-1 bg-slate-200 rounded-full">
-            <div 
+            <div
               className="h-full bg-gradient-to-r from-blue-500 via-purple-500 to-amber-500 rounded-full transition-all duration-1000 ease-in-out"
               style={{ width: `${(activeStep / (steps.length - 1)) * 100}%` }}
-            ></div>
+            />
           </div>
-          
-          {/* Steps */}
           <div className="grid grid-cols-3 relative z-10">
             {steps.map((step, index) => (
-              <div 
+              <div
                 key={index}
                 className={`flex flex-col items-center transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
                 style={{ transitionDelay: `${index * 200}ms` }}
               >
-                <div 
+                <div
                   className={`w-20 h-20 rounded-full flex items-center justify-center mb-6 transition-all duration-500 ${activeStep === index ? 'scale-110 shadow-lg' : 'scale-100 shadow-md'} ${step.color} text-white`}
                   onClick={() => setActiveStep(index)}
                 >
@@ -111,12 +81,8 @@ const Process = () => {
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center mb-4 mx-auto text-white font-bold ${step.color}`}>
                     {step.number}
                   </div>
-                  <h3 className="text-xl font-semibold text-slate-800 mb-3">
-                    {step.title}
-                  </h3>
-                  <p className="text-slate-600 mb-4">
-                    {step.description}
-                  </p>
+                  <h3 className="text-xl font-semibold text-slate-800 mb-3">{step.title}</h3>
+                  <p className="text-slate-600 mb-4">{step.description}</p>
                   <ul className="text-left text-sm text-slate-700 space-y-2">
                     {step.details.map((detail, idx) => (
                       <li key={idx} className="flex items-start">
@@ -131,15 +97,14 @@ const Process = () => {
           </div>
         </div>
 
-        {/* Mobile & Tablet Process Visualization */}
+        {/* Mobile */}
         <div className="lg:hidden space-y-12">
           {steps.map((step, index) => (
-            <div 
+            <div
               key={index}
               className={`flex flex-col sm:flex-row items-center sm:items-start transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
               style={{ transitionDelay: `${index * 200}ms` }}
             >
-              {/* Step Number and Icon */}
               <div className="flex flex-col items-center sm:mr-6 mb-4 sm:mb-0">
                 <div className={`w-16 h-16 rounded-full flex items-center justify-center mb-3 ${step.color} text-white shadow-lg`}>
                   <step.icon className="w-6 h-6" />
@@ -148,15 +113,9 @@ const Process = () => {
                   {step.number}
                 </div>
               </div>
-              
-              {/* Content */}
               <div className="flex-1 text-center sm:text-left bg-white p-6 rounded-xl shadow-md border border-slate-100">
-                <h3 className="text-xl font-semibold text-slate-800 mb-3">
-                  {step.title}
-                </h3>
-                <p className="text-slate-600 mb-4">
-                  {step.description}
-                </p>
+                <h3 className="text-xl font-semibold text-slate-800 mb-3">{step.title}</h3>
+                <p className="text-slate-600 mb-4">{step.description}</p>
                 <ul className="text-sm text-slate-700 space-y-2">
                   {step.details.map((detail, idx) => (
                     <li key={idx} className="flex items-start">
@@ -166,8 +125,6 @@ const Process = () => {
                   ))}
                 </ul>
               </div>
-              
-              {/* Arrow for mobile steps (except last) */}
               {index < steps.length - 1 && (
                 <div className="my-4 sm:hidden flex justify-center">
                   <ArrowRight className="w-6 h-6 text-slate-400 rotate-90" />
@@ -177,7 +134,7 @@ const Process = () => {
           ))}
         </div>
 
-        {/* Step Navigation Dots */}
+        {/* Step Dots */}
         <div className="flex justify-center mt-12 space-x-3">
           {steps.map((_, index) => (
             <button
@@ -189,7 +146,7 @@ const Process = () => {
           ))}
         </div>
 
-        {/* CTA Section with WhatsApp */}
+        {/* WhatsApp CTA */}
         <div className="text-center mt-16 bg-gradient-to-r from-amber-500 to-amber-600 rounded-2xl p-8 sm:p-12 text-white shadow-xl">
           <h3 className="text-2xl sm:text-3xl font-bold mb-4">Ready to Begin Your Journey?</h3>
           <p className="text-lg mb-4 max-w-2xl mx-auto opacity-90">
@@ -198,7 +155,7 @@ const Process = () => {
           <p className="text-amber-100 text-sm mb-6">
             Click to chat with us directly on WhatsApp
           </p>
-          <button 
+          <button
             onClick={handleWhatsAppClick}
             className="bg-white text-amber-600 font-semibold py-3 px-8 rounded-full hover:bg-amber-50 transition-colors shadow-md flex items-center justify-center mx-auto"
           >
