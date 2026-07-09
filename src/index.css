@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ---- Luxury utilities ---- */
+@layer components {
+  .gold-text {
+    background: linear-gradient(120deg, #d4af37 0%, #f5e6c8 50%, #d4af37 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .gold-divider {
+    @apply mx-auto h-px w-24 bg-gradient-to-r from-transparent via-gold to-transparent;
+  }
+  .eyebrow {
+    @apply text-xs tracking-[0.35em] uppercase text-gold font-body;
+  }
+  .glass-card {
+    @apply rounded-2xl border border-gold/25 bg-white/[0.04] backdrop-blur-md shadow-[0_8px_32px_rgba(0,0,0,0.35)] transition-all duration-500;
+  }
+  .glass-card:hover {
+    @apply -translate-y-2 border-gold/60 shadow-[0_0_38px_rgba(212,175,55,0.28)];
+  }
+  .btn-gold {
+    @apply inline-block rounded-full bg-gradient-to-r from-gold via-[#e8c96a] to-gold px-8 py-3.5 font-semibold text-deep transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(212,175,55,0.5)];
+  }
+  .btn-outline-gold {
+    @apply inline-block rounded-full border border-gold/60 px-8 py-3.5 font-semibold text-gold transition-all duration-300 hover:bg-gold/10 hover:scale-105;
+  }
+}
+
+/* ---- Scroll reveal ---- */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; }
+}
