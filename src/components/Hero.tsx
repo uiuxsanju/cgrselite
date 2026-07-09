@@ -33,10 +33,10 @@ const Hero = () => {
 
   // Animated statistics
   const stats = [
-    { value: 500, suffix: '+', label: 'Events Completed' },
-    { value: 98, suffix: '%', label: 'Client Satisfaction' },
+    { value: 100, suffix: '+', label: 'Events Completed' },
+    { value: 100, suffix: '%', label: 'Client Satisfaction' },
     { value: 100, suffix: '+', label: '5 Star Reviews' },
-    { value: 2, suffix: '+', label: 'Cities Served' }
+    { value: 5, suffix: '+', label: 'Cities Served' }
   ];
   const [counts, setCounts] = useState(stats.map(() => 0));
 

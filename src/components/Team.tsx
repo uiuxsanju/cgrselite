@@ -1,9 +1,10 @@
 import React from 'react';
+import { FaLinkedinIn } from 'react-icons/fa6';
 import { useReveal } from '../hooks/useReveal';
 
 const leadership = {
   founder: {
-    name: 'P. Sunil Kumar',
+    name: 'Sunny (Sunil Kumar Palli)',
     role: 'Managing Director',
     description:
       'Leads CGRS Elite Events with a clear vision — building trusted client relationships, overseeing every celebration from planning to execution, and upholding the standard of quality the company is known for across Hyderabad and Visakhapatnam.',
@@ -13,19 +14,26 @@ const leadership = {
       name: 'Mahadev',
       role: 'Event & Client Relationship Manager',
       description:
-        'Handles customer consultations, event planning, scheduling, vendor coordination and client communication — ensuring every event is executed flawlessly.',
+        'Manages client consultations, event planning, vendor coordination, and scheduling to ensure every event runs smoothly.',
     },
     {
       name: 'Meghana',
       role: 'Creative Director',
       description:
-        'Leads creative concepts, luxury décor themes, floral styling, event branding, stage aesthetics and premium visual storytelling.',
+        "Develops creative themes, stage designs, and décor concepts that reflect each client's visions.",
     },
     {
       name: 'Mani Kumar',
       role: 'Social Media & Production Manager',
       description:
         'Responsible for photography, videography, production management, social media campaigns, reels, branding and digital promotions.',
+    },
+    {
+      name: 'Sanju Mutchakarla',
+      role: 'Digital Marketing & Design',
+      description:
+        'digital marketing, social media, graphic design, and website management.',
+      linkedin: 'https://www.linkedin.com/in/sanju-mutchakarla-b85971361',
     },
   ],
 };
@@ -55,7 +63,7 @@ const Team = () => {
             {/* Decorative gradient background */}
             <div className="absolute top-0 right-0 w-72 h-72 bg-gold/5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
             <div className="absolute bottom-0 left-0 w-48 h-48 bg-deep/5 rounded-full translate-y-1/2 -translate-x-1/2"></div>
-            
+
             <div className="relative z-10">
               <div className="flex flex-wrap items-center gap-3 mb-4">
                 <span className="inline-block bg-gold/15 text-gold text-xs tracking-[0.3em] uppercase font-semibold px-5 py-2 rounded-full">
@@ -65,11 +73,11 @@ const Team = () => {
                   Executive Leadership
                 </span>
               </div>
-              
+
               <h3 className="font-display text-3xl sm:text-4xl lg:text-5xl font-semibold text-deep mb-4">
                 {leadership.founder.name}
               </h3>
-              
+
               <p className="max-w-3xl text-[15px] sm:text-base leading-relaxed text-slate-600">
                 {leadership.founder.description}
               </p>
@@ -83,7 +91,7 @@ const Team = () => {
             <h3 className="font-display text-xl sm:text-2xl font-semibold text-deep">Executive Team</h3>
             <div className="flex-1 h-px bg-deep/10"></div>
           </div>
-          
+
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {leadership.executives.map((executive, index) => (
               <div
@@ -92,18 +100,29 @@ const Team = () => {
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
                 <div className="flex flex-col h-full">
-                  <div className="mb-4">
+                  <div className="mb-4 flex items-center justify-between gap-3">
                     <span className="text-[10px] tracking-[0.25em] uppercase text-gold font-semibold">
                       {executive.role}
                     </span>
+                    {executive.linkedin && (
+                      <a
+                        href={executive.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`${executive.name} on LinkedIn`}
+                        className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full border border-deep/15 text-deep/60 transition-all duration-300 hover:border-gold hover:bg-gold hover:text-white"
+                      >
+                        <FaLinkedinIn className="h-3.5 w-3.5" />
+                      </a>
+                    )}
                   </div>
-                  
+
                   <h4 className="font-display text-xl sm:text-2xl font-semibold text-deep mb-3">
                     {executive.name}
                   </h4>
-                  
+
                   <div className="w-10 h-px bg-deep/10 group-hover:w-16 group-hover:bg-gold transition-all duration-500 mb-4"></div>
-                  
+
                   <p className="text-sm leading-relaxed text-slate-600 flex-1">
                     {executive.description}
                   </p>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronDown } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { useReveal } from '../hooks/useReveal';
 
 const faqs = [
@@ -30,57 +30,80 @@ const FAQ = () => {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section id="faq" ref={ref} className="bg-white py-16 sm:py-20 lg:py-24">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-10 sm:mb-14 reveal">
-          <p className="eyebrow mb-3">Good To Know</p>
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-semibold text-slate-800 mb-4">
-            Frequently Asked <span className="text-gold">Questions</span>
-          </h2>
-          <div className="gold-divider"></div>
-        </div>
+    <section id="faq" ref={ref} className="bg-[#FAF7F0] py-16 sm:py-20 lg:py-28">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-20">
+          {/* Left — header */}
+          <div className="reveal lg:sticky lg:top-28 lg:self-start">
+            <p className="eyebrow mb-4">Good To Know</p>
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-semibold text-deep leading-tight">
+              Questions couples
+              <span className="italic font-luxury"> ask us most</span>
+            </h2>
+            <div className="mt-6 h-px w-20 bg-gold"></div>
+            <p className="mt-6 max-w-md text-slate-600 leading-relaxed">
+              Can’t find what you’re looking for? Message us on WhatsApp — we reply personally,
+              usually within the hour.
+            </p>
+            <a
+              href="https://wa.me/916303366066?text=Hello%20CGRS%20Elite%20Events%2C%20I%20have%20a%20question"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-8 inline-block border border-deep px-8 py-3.5 font-medium text-deep transition-colors duration-300 hover:border-gold hover:bg-deep hover:text-gold"
+            >
+              Ask a Question
+            </a>
+          </div>
 
-        <div className="space-y-4">
-          {faqs.map((faq, index) => {
-            const isOpen = open === index;
-            return (
-              <div
-                key={faq.q}
-                className={`rounded-xl border transition-all duration-300 reveal ${
-                  isOpen ? 'border-gold/50 bg-slate-50 shadow-sm' : 'border-slate-200 bg-white'
-                }`}
-              >
-                <button
-                  onClick={() => setOpen(isOpen ? null : index)}
-                  aria-expanded={isOpen}
-                  aria-controls={`faq-panel-${index}`}
-                  className="flex w-full items-center justify-between gap-4 px-5 py-4 sm:px-6 sm:py-5 text-left"
-                >
-                  <span className="font-display text-base sm:text-lg font-semibold text-slate-800">
-                    {faq.q}
-                  </span>
-                  <ChevronDown
-                    className={`h-5 w-5 flex-shrink-0 text-gold transition-transform duration-300 ${
-                      isOpen ? 'rotate-180' : ''
-                    }`}
-                    aria-hidden="true"
-                  />
-                </button>
+          {/* Right — ruled accordion */}
+          <div>
+            {faqs.map((faq, index) => {
+              const isOpen = open === index;
+              return (
                 <div
-                  id={`faq-panel-${index}`}
-                  className={`grid transition-all duration-300 ease-in-out ${
-                    isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
-                  }`}
+                  key={faq.q}
+                  className="border-t border-deep/10 last:border-b reveal"
+                  style={{ transitionDelay: `${index * 80}ms` }}
                 >
-                  <div className="overflow-hidden">
-                    <p className="px-5 pb-5 sm:px-6 text-sm sm:text-base leading-relaxed text-slate-600">
-                      {faq.a}
-                    </p>
+                  <button
+                    onClick={() => setOpen(isOpen ? null : index)}
+                    aria-expanded={isOpen}
+                    aria-controls={`faq-panel-${index}`}
+                    className="group flex w-full items-center justify-between gap-6 py-6 text-left sm:py-7"
+                  >
+                    <span
+                      className={`font-display text-lg sm:text-xl font-semibold transition-colors duration-300 ${
+                        isOpen ? 'text-gold' : 'text-deep group-hover:text-gold'
+                      }`}
+                    >
+                      {faq.q}
+                    </span>
+                    <span
+                      className={`flex h-9 w-9 flex-shrink-0 items-center justify-center border transition-all duration-300 ${
+                        isOpen
+                          ? 'rotate-45 border-gold bg-gold text-deep'
+                          : 'border-deep/20 text-deep group-hover:border-gold group-hover:text-gold'
+                      }`}
+                    >
+                      <Plus className="h-4 w-4" aria-hidden="true" />
+                    </span>
+                  </button>
+                  <div
+                    id={`faq-panel-${index}`}
+                    className={`grid transition-all duration-500 ease-in-out ${
+                      isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+                    }`}
+                  >
+                    <div className="overflow-hidden">
+                      <p className="max-w-2xl pb-7 pr-14 text-[15px] sm:text-base leading-relaxed text-slate-600">
+                        {faq.a}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>

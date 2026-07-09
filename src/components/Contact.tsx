@@ -1,105 +1,170 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Send, Instagram, Facebook, Linkedin } from 'lucide-react';
+import { Mail, Phone, MapPin } from 'lucide-react';
+import { FaInstagram, FaFacebookF, FaWhatsapp } from 'react-icons/fa6';
+import { useReveal } from '../hooks/useReveal';
+
+const socialLinks = [
+  {
+    name: 'Instagram',
+    icon: FaInstagram,
+    href: 'https://www.instagram.com/cgrseliteevents',
+  },
+  {
+    name: 'Facebook',
+    icon: FaFacebookF,
+    href: 'https://www.facebook.com/people/CGRS-ELITE-Events/100067056378022/',
+  },
+  {
+    name: 'WhatsApp',
+    icon: FaWhatsapp,
+    href: 'https://wa.me/916303366066',
+  },
+];
+
+const inputClass =
+  'w-full border-0 border-b border-deep/20 bg-transparent px-0 py-3 text-[15px] text-deep placeholder:text-slate-400 focus:border-gold focus:outline-none focus:ring-0 transition-colors duration-300';
+
+const labelClass = 'block text-[11px] tracking-[0.2em] uppercase text-slate-500 mb-1';
 
 const Contact = () => {
+  const ref = useReveal<HTMLElement>();
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
     phone: '',
     eventDate: '',
     eventLocation: '',
-    message: ''
+    message: '',
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    console.log('Form submitted:', formData);
+    const lines = [
+      'Hello CGRS Elite Events, I would like to plan an event.',
+      '',
+      `Name: ${formData.fullName}`,
+      `Email: ${formData.email}`,
+      formData.phone && `Phone: ${formData.phone}`,
+      formData.eventDate && `Event Date: ${formData.eventDate}`,
+      formData.eventLocation && `Location: ${formData.eventLocation}`,
+      '',
+      formData.message,
+    ]
+      .filter(Boolean)
+      .join('\n');
+    window.open(
+      `https://wa.me/916303366066?text=${encodeURIComponent(lines)}`,
+      '_blank'
+    );
   };
 
-  const socialLinks = [
-    { name: 'Instagram', icon: Instagram, href: 'https://www.instagram.com/cgrselite/?next=%2F&hl=en' },
-    { name: 'Facebook', icon: Facebook, href: 'https://www.facebook.com/people/CGRS-ELITE-Events/100067056378022/' },
-  
-  ];
-
   return (
-    <section id="contact" className="py-12 sm:py-16 lg:py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12 sm:mb-16">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-800 mb-4 sm:mb-6">
-            Get In Touch
+    <section id="contact" ref={ref} className="bg-white py-16 sm:py-20 lg:py-28">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <div className="mb-12 sm:mb-16 max-w-2xl reveal">
+          <p className="eyebrow mb-4">Get In Touch</p>
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-semibold text-deep leading-tight">
+            Let’s plan something
+            <span className="italic font-luxury"> beautiful</span>
           </h2>
-          <p className="text-lg sm:text-xl text-slate-600 max-w-3xl mx-auto">
-            We would love to hear from you. Please fill out the form below to get started.
-          </p>
+          <div className="mt-6 h-px w-20 bg-gold"></div>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16">
-          {/* Contact Information */}
-          <div className="order-2 lg:order-1">
-            <h3 className="text-xl sm:text-2xl font-semibold text-slate-800 mb-6 sm:mb-8">
-              Contact Information
-            </h3>
-            
-            <div className="space-y-4 sm:space-y-6">
-              <div className="flex items-start space-x-3 sm:space-x-4">
-                <Mail className="w-5 h-5 sm:w-6 sm:h-6 text-amber-600 mt-1" />
-                <div>
-                  <h4 className="font-semibold text-slate-800 text-sm sm:text-base">Email</h4>
-                  <p className="text-slate-600 text-sm sm:text-base">sunny@cgrselite.com
-</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start space-x-3 sm:space-x-4">
-                <Phone className="w-5 h-5 sm:w-6 sm:h-6 text-amber-600 mt-1" />
-                <div>
-                  <h4 className="font-semibold text-slate-800 text-sm sm:text-base">Phone</h4>
-                  <p className="text-slate-600 text-sm sm:text-base">+91 6303366066</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start space-x-3 sm:space-x-4">
-                <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-amber-600 mt-1" />
-                <div>
-                  <h4 className="font-semibold text-slate-800 text-sm sm:text-base">Location</h4>
-                  <p className="text-slate-600 text-sm sm:text-base"> Jyothi nagar,Hitech city near Hari hara temple Hyderabad 500018</p>
-                </div>
-              </div>
-            </div>
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
+          {/* Info panel */}
+          <div className="reveal">
+            <div className="bg-deep p-8 sm:p-10 text-white h-full">
+              <h3 className="font-display text-xl sm:text-2xl font-semibold mb-8">
+                Contact Information
+              </h3>
 
-            <div className="mt-8 sm:mt-12">
-              <h4 className="text-base sm:text-lg font-semibold text-slate-800 mb-3 sm:mb-4">Follow Us</h4>
-              <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
-                {socialLinks.map((social) => (
-                  <a
-                    key={social.name}
-                    href={social.href}
-                    className="group bg-slate-100 hover:bg-amber-600 text-slate-600 hover:text-white p-3 rounded-lg transition-all duration-300 flex items-center space-x-2 w-full sm:w-auto"
-                  >
-                    <social.icon className="w-4 h-4 sm:w-5 sm:h-5" />
-                    <span className="text-sm font-medium">{social.name}</span>
-                  </a>
-                ))}
+              <div className="space-y-7">
+                <div className="flex items-start gap-4">
+                  <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center border border-gold/40">
+                    <Mail className="h-5 w-5 text-gold" aria-hidden="true" />
+                  </span>
+                  <div>
+                    <p className="text-[11px] tracking-[0.2em] uppercase text-champagne/70 mb-1">
+                      Email
+                    </p>
+                    <a
+                      href="mailto:sunny@cgrselite.com"
+                      className="text-sm sm:text-base text-gray-200 hover:text-gold transition-colors"
+                    >
+                      sunny@cgrselite.com
+                    </a>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center border border-gold/40">
+                    <Phone className="h-5 w-5 text-gold" aria-hidden="true" />
+                  </span>
+                  <div>
+                    <p className="text-[11px] tracking-[0.2em] uppercase text-champagne/70 mb-1">
+                      Phone
+                    </p>
+                    <a
+                      href="tel:+916303366066"
+                      className="text-sm sm:text-base text-gray-200 hover:text-gold transition-colors"
+                    >
+                      +91 63033 66066
+                    </a>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center border border-gold/40">
+                    <MapPin className="h-5 w-5 text-gold" aria-hidden="true" />
+                  </span>
+                  <div>
+                    <p className="text-[11px] tracking-[0.2em] uppercase text-champagne/70 mb-1">
+                      Location
+                    </p>
+                    <p className="text-sm sm:text-base leading-relaxed text-gray-200">
+                      Jyothi Nagar, Hitech City, near Hari Hara Temple, Hyderabad — 500018
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Socials */}
+              <div className="mt-10 border-t border-white/10 pt-8">
+                <p className="text-[11px] tracking-[0.2em] uppercase text-champagne/70 mb-4">
+                  Follow Us
+                </p>
+                <div className="flex items-center gap-3">
+                  {socialLinks.map((social) => (
+                    <a
+                      key={social.name}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={social.name}
+                      className="flex h-11 w-11 items-center justify-center border border-white/15 text-gray-300 transition-all duration-300 hover:border-gold hover:bg-gold hover:text-deep"
+                    >
+                      <social.icon className="h-4 w-4" />
+                    </a>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Contact Form */}
-          <div className="order-1 lg:order-2">
-            <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+          {/* Form */}
+          <div className="reveal">
+            <form onSubmit={handleSubmit} className="space-y-8">
+              <div className="grid gap-8 md:grid-cols-2">
                 <div>
-                  <label htmlFor="fullName" className="block text-sm font-medium text-slate-700 mb-2">
-                    Full Name
+                  <label htmlFor="fullName" className={labelClass}>
+                    Full Name *
                   </label>
                   <input
                     type="text"
@@ -107,15 +172,14 @@ const Contact = () => {
                     name="fullName"
                     value={formData.fullName}
                     onChange={handleChange}
-                    placeholder="Your Name"
-                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-300 text-sm sm:text-base"
+                    placeholder="Your name"
+                    className={inputClass}
                     required
                   />
                 </div>
-                
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-2">
-                    Email Address
+                  <label htmlFor="email" className={labelClass}>
+                    Email Address *
                   </label>
                   <input
                     type="email"
@@ -124,16 +188,16 @@ const Contact = () => {
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="your.email@example.com"
-                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-300 text-sm sm:text-base"
+                    className={inputClass}
                     required
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+              <div className="grid gap-8 md:grid-cols-2">
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-slate-700 mb-2">
-                    Phone Number (Optional)
+                  <label htmlFor="phone" className={labelClass}>
+                    Phone Number
                   </label>
                   <input
                     type="tel"
@@ -141,14 +205,13 @@ const Contact = () => {
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
-                    placeholder="(123) 456-7890"
-                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-300 text-sm sm:text-base"
+                    placeholder="+91 98765 43210"
+                    className={inputClass}
                   />
                 </div>
-                
                 <div>
-                  <label htmlFor="eventDate" className="block text-sm font-medium text-slate-700 mb-2">
-                    Event Date (Optional)
+                  <label htmlFor="eventDate" className={labelClass}>
+                    Event Date
                   </label>
                   <input
                     type="date"
@@ -156,14 +219,14 @@ const Contact = () => {
                     name="eventDate"
                     value={formData.eventDate}
                     onChange={handleChange}
-                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-300 text-sm sm:text-base"
+                    className={inputClass}
                   />
                 </div>
               </div>
 
               <div>
-                <label htmlFor="eventLocation" className="block text-sm font-medium text-slate-700 mb-2">
-                  Event Location (Optional)
+                <label htmlFor="eventLocation" className={labelClass}>
+                  Event Location
                 </label>
                 <input
                   type="text"
@@ -171,14 +234,14 @@ const Contact = () => {
                   name="eventLocation"
                   value={formData.eventLocation}
                   onChange={handleChange}
-                  placeholder="City, State"
-                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-300 text-sm sm:text-base"
+                  placeholder="City, venue (if decided)"
+                  className={inputClass}
                 />
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-slate-700 mb-2">
-                  Tell us about your event
+                <label htmlFor="message" className={labelClass}>
+                  Tell Us About Your Event *
                 </label>
                 <textarea
                   id="message"
@@ -187,18 +250,23 @@ const Contact = () => {
                   onChange={handleChange}
                   placeholder="Describe your vision, requirements, and any questions you have."
                   rows={4}
-                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-300 text-sm sm:text-base"
+                  className={`${inputClass} resize-none`}
                   required
                 ></textarea>
               </div>
 
-              <button
-                type="submit"
-                className="w-full bg-amber-600 hover:bg-amber-700 text-white py-3 sm:py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2 text-sm sm:text-base"
-              >
-                <Send className="w-4 h-4 sm:w-5 sm:h-5" />
-                <span>Send Message</span>
-              </button>
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                <button
+                  type="submit"
+                  className="inline-flex items-center justify-center gap-2.5 bg-deep px-10 py-4 font-medium text-white transition-colors duration-300 hover:bg-gold hover:text-deep"
+                >
+                  <FaWhatsapp className="h-5 w-5" aria-hidden="true" />
+                  Send via WhatsApp
+                </button>
+                <p className="text-xs text-slate-500">
+                  Your details open in WhatsApp — just press send.
+                </p>
+              </div>
             </form>
           </div>
         </div>

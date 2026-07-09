@@ -24,9 +24,9 @@ const Footer = () => {
   ];
 
   const socials = [
-    { icon: FaFacebookF, label: 'Facebook', href: '#' },
-    { icon: FaInstagram, label: 'Instagram', href: '#' },
-    { icon: FaLinkedinIn, label: 'LinkedIn', href: '#' },
+    { icon: FaFacebookF, label: 'Facebook', href: 'https://www.facebook.com/cgrseliteevents' },
+    { icon: FaInstagram, label: 'Instagram', href: 'https://www.instagram.com/cgrseliteevents?igsh=N2l3MTB6OHhoM2ty&utm_source=qr' },
+    { icon: FaLinkedinIn, label: 'LinkedIn', href: 'https://www.linkedin.com/company/cgrseliteevents' },
     { icon: FaWhatsapp, label: 'WhatsApp', href: 'https://wa.me/916303366066' }
   ];
 
@@ -38,7 +38,7 @@ const Footer = () => {
           <div>
             <div className="flex items-center space-x-2 mb-4">
               <img
-                src="https://i.ibb.co/sJMKxv46/logo-cers.png"
+                src="https://i.ibb.co/Y7msxrL9/IMG-20260709-WA0000.jpg"
                 alt="CGRS Elite Events logo"
                 className="w-10 h-10 object-contain"
                 loading="lazy"
@@ -128,7 +128,7 @@ const Footer = () => {
 
       <div className="border-t border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 text-center text-xs sm:text-sm text-gray-400">
-          © {currentYear} CGRS Elite Events. All Rights Reserved.
+          © {currentYear} Designed by ❤️ by Sanju Mutchakarla.
         </div>
       </div>
     </footer>

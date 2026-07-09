@@ -1,235 +1,240 @@
-import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, X, Maximize2, MoveLeft, MoveRight } from 'lucide-react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { useReveal } from '../hooks/useReveal';
+
+const images = [
+  {
+    src: '/images/g1.jpg',
+    alt: 'Elegant pre-wedding shoot',
+    title: 'Elegant Pre-Wedding Shoot',
+    category: 'Weddings',
+  },
+  {
+    src: '/images/g2.jpg',
+    alt: 'Elegant pre-wedding shoot',
+    title: 'Elegant Pre-Wedding Shoot',
+    category: 'Weddings',
+  },
+  {
+    src: '/images/g3.jpg',
+    alt: 'A heartfelt moment at an event',
+    title: 'Heartfelt Moments',
+    category: 'Celebrations',
+  },
+  {
+    src: 'https://i.pinimg.com/736x/38/4b/9b/384b9bf0c1cbbdf58ae2d46cd94888a8.jpg',
+    alt: 'Elegant wedding reception',
+    title: 'Elegant Wedding Reception',
+    category: 'Weddings',
+  },
+  {
+    src: 'https://i.pinimg.com/736x/45/59/46/45594649aa7e28a5647839eca62b7f35.jpg',
+    alt: 'Corporate conference in session',
+    title: 'Corporate Conference',
+    category: 'Corporate',
+  },
+  {
+    src: 'https://i.pinimg.com/736x/10/76/e3/1076e3f2d40c35afb835079897655653.jpg',
+    alt: 'Joyful birthday celebration',
+    title: 'Birthday Celebration',
+    category: 'Celebrations',
+  },
+  {
+    src: 'https://i.pinimg.com/736x/66/cf/79/66cf7979a9db72bf4b78884c3f8238b8.jpg',
+    alt: 'Bride and groom portrait',
+    title: 'Wedding Portrait',
+    category: 'Weddings',
+  },
+  {
+    src: 'https://i.pinimg.com/736x/b0/60/14/b060148f0c215b5ac8b72694d67e1136.jpg',
+    alt: 'Gourmet food display',
+    title: 'Gourmet Catering',
+    category: 'Catering',
+  },
+  {
+    src: 'https://i.pinimg.com/736x/29/a8/df/29a8dfb1d5db0ba555698aa8802ed8b5.jpg',
+    alt: 'Live band performing at an event',
+    title: 'Live Entertainment',
+    category: 'Entertainment',
+  },
+];
+
+const categories = ['All', ...Array.from(new Set(images.map((i) => i.category)))];
 
 const Gallery = () => {
-  const [currentImage, setCurrentImage] = useState(0);
-  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
-  const [isFullscreen, setIsFullscreen] = useState(false);
-  const [isZoomed, setIsZoomed] = useState(false);
+  const ref = useReveal<HTMLElement>();
+  const [filter, setFilter] = useState('All');
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
-  const images = [
-    {
-      src: '/images/g1.jpg',
-      alt: 'Elegant wedding reception',
-      title: 'Elegant Pre Wedding Shoots  ',
-      category: 'Weddings'
-    },
-    {
-      src: '/images/g2.jpg',
-      alt: 'Elegant wedding reception',
-      title: 'Elegant Pre Wedding Shoots  ',
-      category: 'Weddings'
-    },
-    {
-      src: '/images/g3.jpg',
-      alt: 'Live band performing at an event',
-      title: 'Heart Full Moments',
-      category: 'Momorible'
-    },
-    {
-      src: 'https://i.pinimg.com/736x/38/4b/9b/384b9bf0c1cbbdf58ae2d46cd94888a8.jpg',
-      alt: 'Elegant wedding reception',
-      title: 'Elegant Wedding Reception',
-      category: 'Weddings'
-    },
-    {
-      src: 'https://i.pinimg.com/736x/45/59/46/45594649aa7e28a5647839eca62b7f35.jpg',
-      alt: 'Corporate conference in session',
-      title: 'Corporate Conference',
-      category: 'Corporate'
-    },
-    {
-      src: 'https://i.pinimg.com/736x/10/76/e3/1076e3f2d40c35afb835079897655653.jpg',
-      alt: 'Joyful birthday celebration',
-      title: 'Birthday Celebration',
-      category: 'Celebrations'
-    },
-    {
-      src: 'https://i.pinimg.com/736x/66/cf/79/66cf7979a9db72bf4b78884c3f8238b8.jpg',
-      alt: 'Bride and groom portrait',
-      title: 'Wedding Portrait',
-      category: 'Weddings'
-    },
-    {
-      src: 'https://i.pinimg.com/736x/b0/60/14/b060148f0c215b5ac8b72694d67e1136.jpg',
-      alt: 'Gourmet food display',
-      title: 'Gourmet Catering',
-      category: 'Catering'
-    },
-    {
-      src: 'https://i.pinimg.com/736x/29/a8/df/29a8dfb1d5db0ba555698aa8802ed8b5.jpg',
-      alt: 'Live band performing at an event',
-      title: 'Live Entertainment',
-      category: 'Entertainment'
-    }
-  ];
+  const filtered = useMemo(
+    () => (filter === 'All' ? images : images.filter((i) => i.category === filter)),
+    [filter]
+  );
 
-  // Handle keyboard navigation
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (!isLightboxOpen) return;
-      
-      switch (e.key) {
-        case 'Escape':
-          closeLightbox();
-          break;
-        case 'ArrowRight':
-          nextImage();
-          break;
-        case 'ArrowLeft':
-          prevImage();
-          break;
-        case 'f':
-          setIsFullscreen(!isFullscreen);
-          break;
-        case 'z':
-          setIsZoomed(!isZoomed);
-          break;
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isLightboxOpen, isFullscreen, isZoomed]);
-
-  const openLightbox = (index: number) => {
-    setCurrentImage(index);
-    setIsLightboxOpen(true);
-    document.body.style.overflow = 'hidden';
-  };
-
-  const closeLightbox = () => {
-    setIsLightboxOpen(false);
-    setIsFullscreen(false);
-    setIsZoomed(false);
+  const close = () => {
+    setLightboxIndex(null);
     document.body.style.overflow = 'auto';
   };
-
-  const nextImage = () => {
-    setCurrentImage((prev) => (prev + 1) % images.length);
-    setIsZoomed(false);
+  const open = (index: number) => {
+    setLightboxIndex(index);
+    document.body.style.overflow = 'hidden';
   };
+  const next = () =>
+    setLightboxIndex((p) => (p === null ? null : (p + 1) % filtered.length));
+  const prev = () =>
+    setLightboxIndex((p) => (p === null ? null : (p - 1 + filtered.length) % filtered.length));
 
-  const prevImage = () => {
-    setCurrentImage((prev) => (prev - 1 + images.length) % images.length);
-    setIsZoomed(false);
-  };
-
-  const toggleFullscreen = () => {
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen().catch(err => {
-        console.error(`Error attempting to enable fullscreen: ${err.message}`);
-      });
-    } else {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      }
-    }
-    setIsFullscreen(!isFullscreen);
-  };
-
-  const toggleZoom = () => {
-    setIsZoomed(!isZoomed);
-  };
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (lightboxIndex === null) return;
+      if (e.key === 'Escape') close();
+      if (e.key === 'ArrowRight') next();
+      if (e.key === 'ArrowLeft') prev();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  });
 
   return (
-    <section id="gallery" className="py-16 sm:py-20 lg:py-24 bg-gradient-to-b from-slate-50 to-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-14 sm:mb-20">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-800 mb-4 sm:mb-6">
-            Our <span className="text-amber-600">Gallery</span>
+    <section id="gallery" ref={ref} className="bg-deep py-16 sm:py-20 lg:py-28 text-white">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <div className="mb-10 text-center reveal">
+          <p className="eyebrow mb-4">Our Portfolio</p>
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight">
+            Moments we were honoured
+            <span className="italic font-luxury text-champagne"> to create</span>
           </h2>
-          <p className="text-lg sm:text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
-            Capturing the magic of moments we've orchestrated
-          </p>
+          <div className="gold-divider mt-6"></div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {images.map((image, index) => (
-            <div 
-              key={index}
-              className="relative group cursor-pointer overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-1"
-              onClick={() => openLightbox(index)}
+        {/* Category filters */}
+        <div className="mb-10 flex flex-wrap justify-center gap-3 reveal">
+          {categories.map((category) => (
+            <button
+              key={category}
+              onClick={() => setFilter(category)}
+              className={`border px-5 py-2 text-[11px] tracking-[0.2em] uppercase transition-all duration-300 ${
+                filter === category
+                  ? 'border-gold bg-gold text-deep'
+                  : 'border-white/20 text-gray-300 hover:border-gold hover:text-gold'
+              }`}
             >
-              <div className="aspect-w-16 aspect-h-9 overflow-hidden">
-                <img
-                  src={image.src}
-                  alt={image.alt}
-                  className="w-full h-64 sm:h-72 lg:h-80 object-cover group-hover:scale-105 transition-transform duration-700"
-                  loading="lazy"
-                />
-              </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-slate-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-4 sm:p-6">
-                <div className="text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                  <span className="inline-block px-2 py-1 bg-amber-600 text-xs sm:text-sm rounded-full mb-2">
-                    {image.category}
-                  </span>
-                  <h3 className="text-lg sm:text-xl font-semibold">{image.title}</h3>
-                </div>
-              </div>
-            </div>
+              {category}
+            </button>
           ))}
         </div>
 
-        {/* Lightbox */}
-        {isLightboxOpen && (
-          <div className={`fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4 ${isFullscreen ? 'p-0' : ''}`}>
-            <div className={`relative w-full max-w-6xl ${isFullscreen ? 'h-full max-h-full' : 'max-h-[90vh]'}`}>
-              {/* Close button */}
-              <button
-                onClick={closeLightbox}
-                className="absolute top-4 right-4 sm:top-6 sm:right-6 z-10 text-white hover:text-amber-400 transition-colors bg-black/50 rounded-full p-2 backdrop-blur-sm"
+        {/* Structured grid — first tile featured */}
+        <div className="grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-4">
+          {filtered.map((image, index) => (
+            <figure
+              key={image.src}
+              onClick={() => open(index)}
+              className={`group cursor-pointer reveal ${
+                index === 0 ? 'col-span-2 row-span-2' : ''
+              }`}
+              style={{ transitionDelay: `${(index % 4) * 80}ms` }}
+            >
+              <div
+                className={`relative overflow-hidden ${
+                  index === 0 ? 'aspect-square sm:aspect-[4/3] lg:aspect-square' : 'aspect-[4/5]'
+                }`}
               >
-                <X className="w-6 h-6 sm:w-8 sm:h-8" />
-              </button>
-              
-              {/* Image container */}
-              <div className={`relative w-full h-full flex items-center justify-center ${isZoomed ? 'cursor-zoom-out' : 'cursor-zoom-in'}`}>
                 <img
-                  src={images[currentImage].src}
-                  alt={images[currentImage].alt}
-                  className={`${isZoomed ? 'w-auto h-auto max-w-none max-h-none cursor-zoom-out' : 'max-w-full max-h-full object-contain'} ${isFullscreen ? 'h-screen' : 'max-h-[80vh]'} transition-transform duration-300`}
-                  onClick={toggleZoom}
+                  src={image.src}
+                  alt={image.alt}
+                  loading="lazy"
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                 />
+                <div className="absolute inset-0 bg-deep/0 transition-colors duration-500 group-hover:bg-deep/30"></div>
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-3 border border-gold/0 transition-all duration-500 group-hover:border-gold/60"
+                ></div>
               </div>
-              
-              {/* Image info */}
-              <div className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 text-white bg-black/50 rounded-lg px-3 py-2 backdrop-blur-sm">
-                <h3 className="text-lg sm:text-xl font-semibold">{images[currentImage].title}</h3>
-                <p className="text-sm sm:text-base opacity-90">{images[currentImage].category}</p>
+              {/* Caption — always visible */}
+              <figcaption className="flex items-baseline justify-between gap-3 border-b border-white/10 py-3">
+                <h3
+                  className={`font-display font-semibold transition-colors duration-300 group-hover:text-gold ${
+                    index === 0 ? 'text-base sm:text-lg' : 'text-sm sm:text-base'
+                  }`}
+                >
+                  {image.title}
+                </h3>
+                <p className="hidden flex-shrink-0 text-[10px] tracking-[0.2em] uppercase text-gold/80 sm:block">
+                  {image.category}
+                </p>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+
+      {/* Lightbox */}
+      {lightboxIndex !== null && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-ink/95 p-4"
+          onClick={close}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Image viewer"
+        >
+          <button
+            onClick={close}
+            aria-label="Close"
+            className="absolute right-5 top-5 z-10 flex h-11 w-11 items-center justify-center border border-white/20 text-white transition-colors hover:border-gold hover:text-gold"
+          >
+            <X className="h-5 w-5" />
+          </button>
+
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              prev();
+            }}
+            aria-label="Previous image"
+            className="absolute left-3 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center border border-white/20 text-white transition-colors hover:border-gold hover:text-gold sm:left-6"
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              next();
+            }}
+            aria-label="Next image"
+            className="absolute right-3 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center border border-white/20 text-white transition-colors hover:border-gold hover:text-gold sm:right-6"
+          >
+            <ChevronRight className="h-5 w-5" />
+          </button>
+
+          <div
+            className="flex max-h-[85vh] max-w-5xl flex-col items-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
+              src={filtered[lightboxIndex].src}
+              alt={filtered[lightboxIndex].alt}
+              className="max-h-[75vh] w-auto max-w-full object-contain"
+            />
+            <div className="mt-4 flex w-full items-end justify-between gap-6 border-t border-white/15 pt-4">
+              <div>
+                <p className="text-[10px] tracking-[0.25em] uppercase text-gold mb-1">
+                  {filtered[lightboxIndex].category}
+                </p>
+                <h3 className="font-display text-lg sm:text-xl font-semibold text-white">
+                  {filtered[lightboxIndex].title}
+                </h3>
               </div>
-
-              {/* Navigation controls */}
-              <button
-                onClick={prevImage}
-                className="absolute left-4 sm:left-6 top-1/2 transform -translate-y-1/2 z-10 text-white hover:text-amber-400 transition-colors bg-black/50 rounded-full p-2 sm:p-3 backdrop-blur-sm"
-              >
-                <ChevronLeft className="w-6 h-6 sm:w-8 sm:h-8" />
-              </button>
-              
-              <button
-                onClick={nextImage}
-                className="absolute right-4 sm:right-6 top-1/2 transform -translate-y-1/2 z-10 text-white hover:text-amber-400 transition-colors bg-black/50 rounded-full p-2 sm:p-3 backdrop-blur-sm"
-              >
-                <ChevronRight className="w-6 h-6 sm:w-8 sm:h-8" />
-              </button>
-
-              {/* Fullscreen toggle */}
-              <button
-                onClick={toggleFullscreen}
-                className="absolute top-4 left-4 sm:top-6 sm:left-6 z-10 text-white hover:text-amber-400 transition-colors bg-black/50 rounded-full p-2 backdrop-blur-sm"
-              >
-                <Maximize2 className="w-6 h-6 sm:w-8 sm:h-8" />
-              </button>
-
-              {/* Image counter */}
-              <div className="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 text-white bg-black/50 rounded-lg px-3 py-2 backdrop-blur-sm text-sm sm:text-base">
-                {currentImage + 1} / {images.length}
-              </div>
+              <p className="font-display text-sm text-champagne/80">
+                {lightboxIndex + 1} <span className="text-white/40">/ {filtered.length}</span>
+              </p>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </section>
   );
 };

@@ -32,7 +32,7 @@ const Header = () => {
 <div className="flex items-center space-x-2">
   {/* Logo image */}
   <img 
-    src="https://i.ibb.co/sJMKxv46/logo-cers.png" 
+    src="https://i.ibb.co/Y7msxrL9/IMG-20260709-WA0000.jpg" 
     alt="CGRS Elite Events Logo" 
     className="w-12 h-15 sm:w-13 sm:h-19 object-contain rounded-md transition-all duration-300"
   />
