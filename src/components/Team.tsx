@@ -22,18 +22,18 @@ const leadership = {
   ],
   executives: [
     {
-      name: 'Bhargav Mavuluri',
-      role: 'Event & Client Relationship Manager',
-      image: '/team/bhargav-mavuluri.jpg',
+      name: 'Mahadev',
+      role: 'Event & client Relationship Manager',
+      image: '/team/karthik-n.jpg',
       description:
         'Manages client consultations, event planning, vendor coordination, and scheduling to ensure every event runs smoothly.',
     },
     {
-      name: 'Karthik.N',
-      role: 'On-Site Manager',
-      image: '/team/karthik-n.jpg',
+      name: 'Bhargav Mavuluri',
+      role: 'Event & Relationship Manager',
+      image: '/team/bhargav-mavuluri.jpg',
       description:
-        'Manages client consultations, event planning, vendor coordination, and scheduling to ensure every event runs smoothly.',
+        'Manages consultations, event planning, vendor coordination, and scheduling to ensure every event runs smoothly.',
     },
     {
       name: 'Meghana',
@@ -50,8 +50,18 @@ const leadership = {
         'Responsible for photography, videography, production management, social media campaigns, reels, branding and digital promotions.',
     },
     {
+      name: 'Karthik.N',
+      role: 'On-Site  Manager',
+      image: '/team/karthik-n.jpg',
+      description:
+        'Manages client consultations, event planning, vendor coordination, and scheduling to ensure every event runs smoothly.',
+    },
+   
+    
+   
+    {
       name: 'Sanju Mutchakarla',
-      role: 'Digital Marketing & Design',
+      role: 'website & Designer',
       image: '/team/sanju.jpg',
       description:
         'Digital marketing, social media, graphic design, and website management.',
