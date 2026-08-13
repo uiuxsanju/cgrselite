@@ -1,0 +1,13 @@
+[1mdiff --git a/src/components/Footer.tsx b/src/components/Footer.tsx[m
+[1mindex cec1af1..601249e 100644[m
+[1m--- a/src/components/Footer.tsx[m
+[1m+++ b/src/components/Footer.tsx[m
+[36m@@ -128,7 +128,7 @@[m [mconst Footer = () => {[m
+ [m
+       <div className="border-t border-white/10">[m
+         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 text-center text-xs sm:text-sm text-gray-400">[m
+[31m-          © {currentYear} Designed by  by Sanju webs.[m
+[32m+[m[32m          © {currentYear} Designed by Sanju[m
+         </div>[m
+       </div>[m
+     </footer>[m
