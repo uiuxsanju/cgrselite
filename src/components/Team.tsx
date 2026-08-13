@@ -24,7 +24,7 @@ const leadership = {
     {
       name: 'Mahadev',
       role: 'Event & client Relationship Manager',
-      image: '/team/karthik-n.jpg',
+      image: '/team/mahadev.jpg',
       description:
         'Manages client consultations, event planning, vendor coordination, and scheduling to ensure every event runs smoothly.',
     },
