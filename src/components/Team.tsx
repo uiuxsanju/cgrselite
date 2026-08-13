@@ -30,7 +30,7 @@ const leadership = {
     },
     {
       name: 'Bhargav Mavuluri',
-      role: 'Event & Relationship Manager',
+      role: 'Event Relationship Manager',
       image: '/team/bhargav-mavuluri.jpg',
       description:
         'Manages consultations, event planning, vendor coordination, and scheduling to ensure every event runs smoothly.',
@@ -50,7 +50,7 @@ const leadership = {
         'Responsible for photography, videography, production management, social media campaigns, reels, branding and digital promotions.',
     },
     {
-      name: 'Karthik.N',
+      name: 'Karthik N',
       role: 'On-Site  Manager',
       image: '/team/karthik-n.jpg',
       description:
