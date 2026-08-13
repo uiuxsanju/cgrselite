@@ -128,7 +128,7 @@ const Footer = () => {
 
       <div className="border-t border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 text-center text-xs sm:text-sm text-gray-400">
-          © {currentYear} Designed by ❤️ by Sanju Mutchakarla.
+          © {currentYear} Designed by  by Sanju webs.
         </div>
       </div>
     </footer>
