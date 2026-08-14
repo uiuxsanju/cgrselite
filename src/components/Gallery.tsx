@@ -2,6 +2,8 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { useReveal } from '../hooks/useReveal';
 
+const BABY_NAME = '';
+
 const images = [
   {
     src: '/images/g1.jpg',
@@ -56,6 +58,56 @@ const images = [
     alt: 'Live band performing at an event',
     title: 'Live Entertainment',
     category: 'Entertainment',
+  },
+  // ---- Newborn Shoot additions ----
+  {
+    src: '/images/newborn-01.png',
+    alt: 'Newborn swaddled in blue and yellow on a mini vintage cot',
+    title: 'Sweet Slumber',
+    category: 'Newborn',
+    babyName: BABY_NAME,
+  },
+  {
+    src: '/images/newborn-02.png',
+    alt: 'Newborn girl in a cracked-egg prop under a starry night backdrop',
+    title: 'Little Star',
+    category: 'Newborn',
+    babyName: BABY_NAME,
+  },
+  {
+    src: '/images/newborn-03.png',
+    alt: 'Newborn girl with floral headband in a pink knit-blanket basket',
+    title: 'Pretty in Pink',
+    category: 'Newborn',
+    babyName: BABY_NAME,
+  },
+  {
+    src: '/images/newborn-04.png',
+    alt: 'Close-up of a swaddled newborn sleeping on a fur rug',
+    title: 'Peaceful Dreams',
+    category: 'Newborn',
+    babyName: BABY_NAME,
+  },
+  {
+    src: '/images/newborn-05.png',
+    alt: 'Newborn girl on a mustard yellow backdrop with a date marker',
+    title: 'Golden Hour Arrival',
+    category: 'Newborn',
+    babyName: BABY_NAME,
+  },
+  {
+    src: '/images/newborn-06.png',
+    alt: 'Newborn dressed in a knitted owl costume in a rattan basket',
+    title: 'Little Night Owl',
+    category: 'Newborn',
+    babyName: BABY_NAME,
+  },
+  {
+    src: '/images/newborn-07.png',
+    alt: 'Newborn wearing tiny sunglasses resting on a wooden barrel',
+    title: 'Cool Cub',
+    category: 'Newborn',
+    babyName: BABY_NAME,
   },
 ];
 
@@ -131,7 +183,7 @@ const Gallery = () => {
             <figure
               key={image.src}
               onClick={() => open(index)}
-              className={`group cursor-pointer reveal ${
+              className={`group relative cursor-pointer reveal overflow-hidden rounded-2xl ring-1 ring-white/10 shadow-lg shadow-black/40 transition-all duration-500 hover:ring-gold/50 hover:shadow-gold/10 ${
                 index === 0 ? 'col-span-2 row-span-2' : ''
               }`}
               style={{ transitionDelay: `${(index % 4) * 80}ms` }}
@@ -145,27 +197,40 @@ const Gallery = () => {
                   src={image.src}
                   alt={image.alt}
                   loading="lazy"
-                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-deep/0 transition-colors duration-500 group-hover:bg-deep/30"></div>
-                <div
-                  aria-hidden="true"
-                  className="absolute inset-3 border border-gold/0 transition-all duration-500 group-hover:border-gold/60"
-                ></div>
-              </div>
-              {/* Caption — always visible */}
-              <figcaption className="flex items-baseline justify-between gap-3 border-b border-white/10 py-3">
-                <h3
-                  className={`font-display font-semibold transition-colors duration-300 group-hover:text-gold ${
-                    index === 0 ? 'text-base sm:text-lg' : 'text-sm sm:text-base'
-                  }`}
-                >
-                  {image.title}
-                </h3>
-                <p className="hidden flex-shrink-0 text-[10px] tracking-[0.2em] uppercase text-gold/80 sm:block">
+
+                {/* Bottom gradient for readable caption */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/10 to-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-100" />
+
+                {/* Category pill */}
+                <span className="absolute right-3 top-3 rounded-full bg-gold/90 px-3 py-1 text-[9px] font-semibold uppercase tracking-wider text-deep backdrop-blur-sm">
                   {image.category}
-                </p>
-              </figcaption>
+                </span>
+
+                {/* Baby name badge (only on newborn shots) */}
+                {image.babyName && (
+                  <span className="absolute left-3 top-3 rounded-full border border-gold/40 bg-black/40 px-3 py-1 text-[10px] uppercase tracking-[0.15em] text-gold backdrop-blur-md">
+                    {image.babyName}
+                  </span>
+                )}
+
+                {/* Caption overlay */}
+                <div className="absolute inset-x-0 bottom-0 translate-y-1 p-4 transition-transform duration-500 group-hover:translate-y-0">
+                  <h3
+                    className={`font-display font-semibold text-white drop-shadow-md transition-colors duration-300 group-hover:text-gold ${
+                      index === 0 ? 'text-base sm:text-lg' : 'text-sm sm:text-base'
+                    }`}
+                  >
+                    {image.title}
+                  </h3>
+                  {image.babyName && (
+                    <p className="mt-1 font-luxury italic text-sm text-champagne/90">
+                      — {image.babyName}
+                    </p>
+                  )}
+                </div>
+              </div>
             </figure>
           ))}
         </div>
@@ -217,7 +282,7 @@ const Gallery = () => {
             <img
               src={filtered[lightboxIndex].src}
               alt={filtered[lightboxIndex].alt}
-              className="max-h-[75vh] w-auto max-w-full object-contain"
+              className="max-h-[75vh] w-auto max-w-full object-contain rounded-lg"
             />
             <div className="mt-4 flex w-full items-end justify-between gap-6 border-t border-white/15 pt-4">
               <div>
@@ -226,6 +291,11 @@ const Gallery = () => {
                 </p>
                 <h3 className="font-display text-lg sm:text-xl font-semibold text-white">
                   {filtered[lightboxIndex].title}
+                  {filtered[lightboxIndex].babyName && (
+                    <span className="ml-2 font-luxury italic text-champagne/90 text-base">
+                      — {filtered[lightboxIndex].babyName}
+                    </span>
+                  )}
                 </h3>
               </div>
               <p className="font-display text-sm text-champagne/80">
